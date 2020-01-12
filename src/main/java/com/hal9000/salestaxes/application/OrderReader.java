@@ -11,9 +11,12 @@ import java.util.Objects;
 
 public class OrderReader {
 
-    public Order readItems (String input) {
+    public static final int DESCRIPTION = 0;
+    public static final int PRICE = 1;
 
-        List<Item> items = new BufferedReader(new StringReader(input)).lines()
+    public Order readItems (String shoppingBasket) {
+
+        List<Item> items = new BufferedReader(new StringReader(shoppingBasket)).lines()
             .map(this::getItem)
             .filter (Objects::nonNull)
             .collect(toList());
@@ -22,8 +25,17 @@ public class OrderReader {
     }
 
     private Item getItem(String line) {
-        String[] orderFields = line.split(" at ");
-        return orderFields.length != 2 ? null : new Item(orderFields[0], Double.valueOf(orderFields [1]));
+        String[] itemFields = line.split(" at ");
+        return itemFields.length != 2 ? null : getItemFromFields(itemFields);
+    }
+
+    private Item getItemFromFields(String[] orderFields) {
+        Item item = null;
+        try {
+            if (orderFields [DESCRIPTION].length() > 0)
+                return new Item(orderFields[DESCRIPTION], Double.valueOf(orderFields [PRICE]));
+        } catch (NumberFormatException e) {}
+        return item;
     }
 
 }

@@ -2,9 +2,7 @@ package com.hal9000.salestaxes.application;
 
 import static java.lang.String.format;
 
-import com.hal9000.salestaxes.domain.Item;
 import com.hal9000.salestaxes.domain.Order;
-import java.util.List;
 
 public class ReceiptGenerator {
 
@@ -30,15 +28,7 @@ public class ReceiptGenerator {
 
     private void addItems(Order order, StringBuilder sb) {
         order.iterator().forEachRemaining(item ->
-            sb.append(format("%s: %.2f\n", item.getDescription(), item.getPrice())));
-    }
-
-    private Order createOrder(List<Item> items) {
-        Order order = new Order();
-
-        items.forEach(item -> order.add(item));
-
-        return order;
+            sb.append(format("%s: %.2f\n", item.getDescription(), item.getPriceAfterTaxes())));
     }
 
 }
