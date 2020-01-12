@@ -1,8 +1,8 @@
 package com.hal9000.salestaxes.domain;
 
 import static java.lang.Math.ceil;
+import static java.util.Arrays.asList;
 
-import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Item {
 
-    private static List<String> taxExemptions = Arrays.asList(
-        "CHOCOLATE", "BOOK" , "HEADACHE PILL"
-    );
+    private static List<String> TAX_EXEMPTIONS = asList("CHOCOLATE", "BOOK" , "HEADACHE PILL");
 
     private static final String IMPORTED = "IMPORTED";
 
@@ -21,7 +19,8 @@ public class Item {
     private Double price;
 
     public double getTaxAmountApplied() {
-        return ceil(price * (getRegularTaxRateApplied() + getImportedTaxRateApplied())*20)/20;
+        double taxRateApplied = getRegularTaxRateApplied() + getImportedTaxRateApplied();
+        return ceil(price * taxRateApplied / 0.05) / 20;
     }
 
     public double getPriceAfterTaxes () {
@@ -37,7 +36,7 @@ public class Item {
     }
 
     private boolean isExempt () {
-        return taxExemptions.stream().anyMatch(exemption -> description.toUpperCase().contains(exemption));
+        return TAX_EXEMPTIONS.stream().anyMatch(exemption -> description.toUpperCase().contains(exemption));
 
     }
 

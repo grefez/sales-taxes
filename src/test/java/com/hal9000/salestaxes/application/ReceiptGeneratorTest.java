@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ReceiptGeneratorTest {
+public class ReceiptGeneratorTest {
 
     private ReceiptGenerator underTest = new ReceiptGenerator();
 

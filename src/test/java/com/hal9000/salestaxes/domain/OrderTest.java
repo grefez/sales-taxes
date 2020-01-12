@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class OrderTest {
+public class OrderTest {
 
     @Test
     @DisplayName ("Should return correct values for empty orders")

@@ -6,7 +6,7 @@ import com.hal9000.salestaxes.domain.Order;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class OrderReaderTest {
+public class OrderReaderTest {
 
     private static final String INPUT_ALL_VALID_ITEMS = ""
         + "1 book at 2.30\n"

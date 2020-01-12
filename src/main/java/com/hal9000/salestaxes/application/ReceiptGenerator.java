@@ -6,15 +6,12 @@ import com.hal9000.salestaxes.domain.Order;
 
 public class ReceiptGenerator {
 
-
     public String generateReceipt (Order order) {
-
         StringBuilder sb = new StringBuilder();
         addItems(order, sb);
         addTotals(order, sb);
 
         return sb.toString();
-
     }
 
     private void addTotals(Order order, StringBuilder sb) {
@@ -22,13 +19,13 @@ public class ReceiptGenerator {
         addLine(sb, "Total", order.getItemsTotal() + order.getOrderTaxes());
     }
 
-    private void addLine(StringBuilder sb, String title, Double itemsTotal) {
-        sb.append(format("%s: %.2f\n", title, itemsTotal));
+    private void addItems(Order order, StringBuilder sb) {
+        order.iterator().forEachRemaining(item -> addLine(sb, item.getDescription(), item.getPriceAfterTaxes()));
     }
 
-    private void addItems(Order order, StringBuilder sb) {
-        order.iterator().forEachRemaining(item ->
-            sb.append(format("%s: %.2f\n", item.getDescription(), item.getPriceAfterTaxes())));
+    private void addLine(StringBuilder sb, String title, Double amount) {
+        sb.append(format("%s: %.2f\n", title, amount));
     }
+
 
 }

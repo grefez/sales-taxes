@@ -11,8 +11,9 @@ import java.util.Objects;
 
 public class OrderReader {
 
-    public static final int DESCRIPTION = 0;
-    public static final int PRICE = 1;
+    private static final int DESCRIPTION = 0;
+    private static final int PRICE = 1;
+    private static final String ITEM_FIELDS_SEPARATOR = " at ";
 
     public Order readItems (String shoppingBasket) {
 
@@ -25,17 +26,17 @@ public class OrderReader {
     }
 
     private Item getItem(String line) {
-        String[] itemFields = line.split(" at ");
+        String[] itemFields = line.split(ITEM_FIELDS_SEPARATOR);
         return itemFields.length != 2 ? null : getItemFromFields(itemFields);
     }
 
     private Item getItemFromFields(String[] orderFields) {
-        Item item = null;
         try {
-            if (orderFields [DESCRIPTION].length() > 0)
-                return new Item(orderFields[DESCRIPTION], Double.valueOf(orderFields [PRICE]));
-        } catch (NumberFormatException e) {}
-        return item;
+            return orderFields[DESCRIPTION].length() == 0 ?
+                null : new Item(orderFields[DESCRIPTION], Double.valueOf(orderFields [PRICE]));
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
 }
